@@ -1,8 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.models import Base
-
 # Database address
 SQLALCHEMY_DATABASE_URL = "sqlite:///./todos.db"
 
@@ -22,7 +20,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
-# Creates database table
-Base.metadata.create_all(bind=engine)
