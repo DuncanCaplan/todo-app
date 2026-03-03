@@ -4,15 +4,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # Database address
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/todos.db")
-
-if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
-    os.makedirs("data", exist_ok=True)
-
-# Creates the database "todos.db"
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+SQLALCHEMY_DATABASE_URL = os.getenv(
+    "DATABASE_URL", "postgresql+psycopg2://todo:changeme@localhost/todo-db"
 )
+
+connect_args = {}
+if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
+    connect_args["check_same_thread"] = False
+
+# Database engine
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args=connect_args)
 
 # Creates per-request database sessions
 SessionLocal = sessionmaker(bind=engine)
