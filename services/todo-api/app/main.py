@@ -9,5 +9,5 @@ app = FastAPI(title="Todo API", version="0.1.0")
 
 app.include_router(router)
 
-# Creates database table
+# Creates table using engine from database.py
 Base.metadata.create_all(bind=engine)
