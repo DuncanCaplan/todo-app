@@ -7,9 +7,11 @@ from app.main import app
 from app.models import Base
 
 TEST_DATABASE_URL = "sqlite:///./test.db"
+
 test_engine = create_engine(
     TEST_DATABASE_URL, connect_args={"check_same_thread": False}
 )
+
 TestSession = sessionmaker(bind=test_engine)
 
 Base.metadata.create_all(bind=test_engine)
@@ -23,8 +25,10 @@ def override_get_db():
         db.close()
 
 
+# Changes the db to TestSession
 app.dependency_overrides[get_db] = override_get_db
 
+# Simulates HTTP requests using correct routes
 client = TestClient(app)
 
 

@@ -3,11 +3,12 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# Database address
+# Database address, with fallback if env is set for CI
 SQLALCHEMY_DATABASE_URL = os.getenv(
     "DATABASE_URL", "postgresql+psycopg2://todo:changeme@localhost/todo-db"
 )
 
+# Only adds the argument when using SQLite for tests
 connect_args = {}
 if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
     connect_args["check_same_thread"] = False
